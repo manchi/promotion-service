@@ -1,4 +1,4 @@
-package app.demo.promotion.service;
+package app.demo.promotion;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
