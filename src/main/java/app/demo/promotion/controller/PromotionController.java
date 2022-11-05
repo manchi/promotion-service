@@ -25,6 +25,8 @@ public class PromotionController {
     @PostMapping("/checkout")
     public ResponseEntity<String> placeOrder(@RequestBody List<SKU> items) {
         log.info("request received for placeOrder: {}", items.size());
+
+        // call the service
         Integer total = promotionService.applyPromotion(items);
 
         log.info("total after applying promotion: {}", total);
