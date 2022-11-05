@@ -36,7 +36,7 @@ public class PromotionServiceImpl implements PromotionService {
         Integer sum = 0;
 
         for (SKU item : items) {
-            switch (item.getName()) {
+            switch (item.getName().toUpperCase()) {
                 case "A" -> {
                     Promotion promotionA = promotions.get("A");
                     totalA = calculatePromoTotal(item.getQuantity(), promotionA);

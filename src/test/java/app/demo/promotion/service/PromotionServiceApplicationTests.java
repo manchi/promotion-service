@@ -100,7 +100,7 @@ class PromotionServiceApplicationTests {
     }
 
     @Test
-    void when_3_items_of_1_quantity_with_C_only_then_total_is_140() {
+    void when_3_items_with_C_only_then_total_is_140() {
 
         List<SKU> skuList = List.of(new SKU("A", 1),
                                     new SKU("B", 1),
@@ -111,7 +111,7 @@ class PromotionServiceApplicationTests {
     }
 
     @Test
-    void when_3_items_of_1_quantity_with_D_only_then_total_is_125() {
+    void when_3_items_with_D_only_then_total_is_125() {
 
         List<SKU> skuList = List.of(new SKU("A", 1),
                                     new SKU("B", 1),
@@ -197,6 +197,59 @@ class PromotionServiceApplicationTests {
          */
         Integer total = promotionService.applyPromotion(skuList);
         assertEquals(295, total);
+    }
+
+    @Test
+    void when_3_items_of_0_quantity_then_total_is_0() {
+
+        List<SKU> skuList = List.of(new SKU("A", 0),
+                                    new SKU("B", 0),
+                                    new SKU("C", 0));
+
+        Integer total = promotionService.applyPromotion(skuList);
+        assertEquals(0, total);
+    }
+
+    @Test
+    void when_4_items_of_0_quantity_then_total_is_0() {
+
+        List<SKU> skuList = List.of(new SKU("A", 0),
+                                    new SKU("B", 0),
+                                    new SKU("C", 0),
+                                    new SKU("D", 0));
+
+        Integer total = promotionService.applyPromotion(skuList);
+        assertEquals(0, total);
+    }
+
+    @Test
+    void when_4_items_of_2_quantity_with_lowercase_then_total_is_200() {
+
+        List<SKU> skuList = List.of(new SKU("a", 1),
+                                    new SKU("b", 2),
+                                    new SKU("c", 3),
+                                    new SKU("d", 4));
+        /*
+        A:1, B:2, C:3, D:4
+        50 + 45 + 30*3 + 15 = 200
+         */
+        Integer total = promotionService.applyPromotion(skuList);
+        assertEquals(200, total);
+    }
+
+    @Test
+    void when_4_items_with_lowercase_invalid_then_total_is_155() {
+
+        List<SKU> skuList = List.of(new SKU("a", 1),
+                                    new SKU("b", 2),
+                                    new SKU("c", 3),
+                                    new SKU("x", 4));
+        /*
+        A:1, B:2, C:3, D:4
+        50 + 45 + 30*3 + 15 = 200
+         */
+        Integer total = promotionService.applyPromotion(skuList);
+        assertEquals(155, total);
     }
 
 }
