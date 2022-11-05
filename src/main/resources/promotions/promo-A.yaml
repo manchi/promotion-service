@@ -1,0 +1,5 @@
+name: "A"
+promotion:
+  unitPrice: 50
+  promoQuantity: 3
+  promoPrice: 130

@@ -1,0 +1,5 @@
+name: "C"
+promotion:
+  unitPrice: 20
+  promoQuantity: 1
+  promoPrice: 20

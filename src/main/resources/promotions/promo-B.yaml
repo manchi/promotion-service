@@ -1,0 +1,5 @@
+name: "B"
+promotion:
+  unitPrice: 30
+  promoQuantity: 2
+  promoPrice: 45

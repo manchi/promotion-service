@@ -1,0 +1,5 @@
+name: "CD"
+promotion:
+  unitPrice: 30
+  promoQuantity: 1
+  promoPrice: 30

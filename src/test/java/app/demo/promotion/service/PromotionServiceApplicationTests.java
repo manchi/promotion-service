@@ -252,4 +252,41 @@ class PromotionServiceApplicationTests {
         assertEquals(155, total);
     }
 
+    @Test
+    void when_CD_items_with_equal_quantity_lowercase_then_total_is_60() {
+
+        List<SKU> skuList = List.of(new SKU("c", 2),
+                                    new SKU("d", 2));
+        Integer total = promotionService.applyPromotion(skuList);
+        assertEquals(60, total);
+    }
+
+    @Test
+    void when_CD_items_with_higher_C_quantity_lowercase_then_total_is_100() {
+
+        List<SKU> skuList = List.of(new SKU("c", 4),
+                                    new SKU("d", 2));
+        Integer total = promotionService.applyPromotion(skuList);
+        assertEquals(100, total);
+    }
+
+    @Test
+    void when_CD_items_with_higher_D_quantity_lowercase_then_total_is_90() {
+
+        List<SKU> skuList = List.of(new SKU("c", 2),
+                                    new SKU("d", 4));
+        Integer total = promotionService.applyPromotion(skuList);
+        assertEquals(90, total);
+    }
+
+    @Test
+    void when_CD_items_with_higher_D_quantity_lowercase_invalid_then_total_is_90() {
+
+        List<SKU> skuList = List.of(new SKU("c", 2),
+                                    new SKU("d", 4),
+                                    new SKU("z", 4));
+        Integer total = promotionService.applyPromotion(skuList);
+        assertEquals(90, total);
+    }
+
 }

@@ -27,58 +27,67 @@ public class PromotionServiceImpl implements PromotionService {
         log.info("items: {}", items.size());
 
         // to store the quantity of c and d products
-        Integer countC = null, countD = null;
+        int countC = 0, countD = 0;
 
         // init all products total to 0
-        Integer totalA = 0, totalB = 0, totalC = 0, totalD = 0;
+        int totalA = 0, totalB = 0, totalC = 0, totalD = 0;
 
         // return total value
-        Integer sum = 0;
+        int sum = 0;
 
         for (SKU item : items) {
             switch (item.getName().toUpperCase()) {
                 case "A" -> {
                     Promotion promotionA = promotions.get("A");
                     totalA = calculatePromoTotal(item.getQuantity(), promotionA);
+                    log.info("total for {}: {}", item.getName(), totalA);
                 }
                 case "B" -> {
                     Promotion promotionB = promotions.get("B");
                     totalB = calculatePromoTotal(item.getQuantity(), promotionB);
+                    log.info("total for {}: {}", item.getName(), totalB);
                 }
                 case "C" -> {
                     Promotion promotionC = promotions.get("C");
                     countC = item.getQuantity();
                     totalC = calculatePromoTotal(item.getQuantity(), promotionC);
+                    log.info("total for {}: {}", item.getName(), totalC);
                 }
                 case "D" -> {
                     Promotion promotionD = promotions.get("D");
                     countD = item.getQuantity();
                     totalD = calculatePromoTotal(item.getQuantity(), promotionD);
+                    log.info("total for {}: {}", item.getName(), totalD);
                 }
             }
         }
 
-        if (countC != null && countD != null) {
-            // check for product C and product D
+        // check for product C and product D
+        if (countC > 0 && countD > 0) {
 
             if (countC == countD) {
+                // both have same values. so apply single logic using one of the counts
 
-                // both have same value. so apply single logic
-                Integer totalCD = calculatePromoTotal(countC, promotions.get("CD"));
+                int totalCD = calculatePromoTotal(countC, promotions.get("CD"));
+                log.info("[C==D] promotion total for CD: {}", totalCD);
 
                 sum = totalA + totalB + totalCD;
             } else if (countC > countD) {
 
                 // C count is more than D
-                Integer totalCD = calculatePromoTotal(countD, promotions.get("CD"));
-                Integer remainingC = calculatePromoTotal(countC - countD, promotions.get("C"));
+                int totalCD = calculatePromoTotal(countD, promotions.get("CD"));
+                log.info("[C>D] promotion total for CD: {}", totalCD);
+                int remainingC = calculatePromoTotal(countC - countD, promotions.get("C"));
+                log.info("promotion total for remaining C count: {}", remainingC);
 
                 sum = totalA + totalB + totalCD + remainingC;
             } else { // countD > countC
 
                 // D count is more than C
-                Integer totalCD = calculatePromoTotal(countC, promotions.get("CD"));
-                Integer remainingD = calculatePromoTotal(countD - countC, promotions.get("D"));
+                int totalCD = calculatePromoTotal(countC, promotions.get("CD"));
+                log.info("[C<D] promotion total for CD: {}", totalCD);
+                int remainingD = calculatePromoTotal(countD - countC, promotions.get("D"));
+                log.info("promotion total for remaining D count: {}", remainingD);
 
                 sum = totalA + totalB + totalCD + remainingD;
             }
@@ -87,6 +96,7 @@ public class PromotionServiceImpl implements PromotionService {
             sum = totalA + totalB + totalC + totalD;
         }
 
+        log.info("returning: {}", sum);
         log.info("applyPromotion - end");
         return sum;
     }
@@ -97,7 +107,7 @@ public class PromotionServiceImpl implements PromotionService {
         Integer promoPrice = promotion.getPromoPrice();
 
         Integer total = (itemSize / promoQuantity) * promoPrice + (itemSize % promoQuantity) * unitPrice;
-        log.info("total: {}", total);
+        log.info("calculatePromoTotal: {}", total);
 
         return total;
     }
