@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PromotionConfig {
 
     @Bean(name = "promotions")
-    public Map<String, Promotion> loadPromotions() throws IOException {
+    public Map<String, Promotion> loadPromotions() {
 
         Map<String, Promotion> collection = new HashMap<>();
 
@@ -24,11 +24,13 @@ public class PromotionConfig {
         Product productB = new Product("B", new Promotion(30, 2, 45));
         Product productC = new Product("C", new Promotion(20, 1, 20));
         Product productD = new Product("D", new Promotion(15, 1, 15));
+        Product productCD = new Product("CD", new Promotion(30, 1, 30));
 
         collection.put(productA.getName(), productA.getPromotion());
         collection.put(productB.getName(), productB.getPromotion());
         collection.put(productC.getName(), productC.getPromotion());
         collection.put(productD.getName(), productD.getPromotion());
+        collection.put(productCD.getName(), productCD.getPromotion());
 
         log.info("total promotions: {}", collection.size());
         log.info("collection: {}", collection);
