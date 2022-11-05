@@ -245,8 +245,8 @@ class PromotionServiceApplicationTests {
                                     new SKU("c", 3),
                                     new SKU("x", 4));
         /*
-        A:1, B:2, C:3, D:4
-        50 + 45 + 30*3 + 15 = 200
+        A:1, B:2, C:3, X:4
+        50 + 45 + 60 = 155
          */
         Integer total = promotionService.applyPromotion(skuList);
         assertEquals(155, total);
